@@ -16,7 +16,7 @@ exports.create = function(req, res) {
   
   console.log(rfi);
   res.send('post request');
-  /*var response = {
+  var response = {
     msg: 'RFI has been successfully sent',
     status: 'success'
   };
@@ -30,8 +30,5 @@ exports.create = function(req, res) {
     console.log('run 4');
      res.json(response);
 
-  });*/
+  });
 };
-
-
-

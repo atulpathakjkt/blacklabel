@@ -46,6 +46,9 @@ var RfiSchema = new Schema({
     type: Date,
     trim: true
   },
+  items : {
+    type: Array
+  },
   shipingAddress: {
     type: String,
     trim: true
@@ -70,7 +73,7 @@ var RfiSchema = new Schema({
     type: String,
     trim: true
   },
-  date: {
+  signDate: {
     type: Date,
     trim: true,
     default: Date.now()

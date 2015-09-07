@@ -4,13 +4,25 @@
 angular.module('mean.rfi')
 .factory('countFactory', function(){
     var countF = 1;
+    var totalItems = 1;
     return {
         getCount : function () {
             return countF;
         },
+        getTotalItemsCount : function(){
+            return totalItems;
+        },
         incrementCount:function(){
-           countF++;
+            countF++;
             return countF;
+        },
+        incrementTotalCount: function() {
+            totalItems++;
+            return totalItems;
+        },
+        decrementTotalCount:function(){
+            totalItems--;
+            return totalItems;
         }
     }
 });
@@ -19,46 +31,47 @@ angular.module('mean.rfi')
 .controller('createrfiController',['$scope', 'countFactory', 'Global', 'Rfi', '$http',
     function($scope, countFactory, Global, Rfi, $http) {
       $scope.count = countFactory.getCount();
+      $scope.totalItemsCount = countFactory.getTotalItemsCount();
       $scope.global = Global;
 
       $scope.createNewRfi = function(){
         //push all item into items[]
         $scope.items = [];
+
         for(var i =1; i <= $scope.count; i++){
-        
-          //console.log($scope["item"+i]);
-          if($scope["item"+i].number === undefined || $scope["item"+i].detail === undefined ){
-            //add logic if value is undefined........to be done
-            console.log('inside if');
-          }
-          else{
-            $scope.items.push({
-              number  : $scope["item"+i].number,
-              detail  : $scope["item"+i].detail,
-              quantity: $scope["item"+i].quantity
-            });
+          if(!angular.isUndefined($scope["item"+i]) || ! $scope["item"+i] === null ) {
+            console.log($scope["item"+i]);
+            if($scope["item"+i].number === undefined && $scope["item"+i].detail === undefined && $scope["item"+i].quantity === undefined ){
+              //add logic if value is undefined........to be done
+            }
+            else{
+              $scope.items.push({
+                number  : $scope["item"+i].number,
+                detail  : $scope["item"+i].detail,
+                quantity: $scope["item"+i].quantity
+              });
+            }
           }
         }
-        console.log("rfi");
+        console.log($scope.items);
         var rfi = new Rfi({
           chooseBussiness: this.chooseBussiness,
           to: this.emailAddresses,
           mailingAddress: this.mailingAddress,
           shipTo: this.shipTo,
+          rfiDate: this.rfiDate.date,
+          rfiDueDate: this.rfiDate.dueDate,
           shipingAddress: this.shipingAddress,
-          rfiDate: this.rfi.date,
-          rfiDueDate: this.rfi.dueDate,
           shipVia: this.shipVia,
           items: $scope.items,
           memo: this.memo,
           message: this.message,
           approvedBy: this.approvedBy,
-          todayDate: this.todayDate
+          signDate: this.signDate
         });
     
-        console.log(rfi);
         //this.shipingAddress = rfi.mailingaddress;
-      
+
         $http.post("/rfi", rfi)
           .success(function (data, status, headers)
           {
@@ -86,8 +99,20 @@ angular.module('mean.rfi')
     //increment count when row is added
     $scope.addItem = function (){
       $scope.count = countFactory.incrementCount();
+      $scope.totalItemsCount = countFactory.incrementTotalCount();
     };
     
+    $scope.removeItem = function (){
+      $scope.totalItemsCount = countFactory.decrementTotalCount();
+    };
+
+    //
+    $scope.rfiDate = {
+      date: new Date(),
+      dueDate: new Date(),
+      signDate: new Date()
+    };
+
   }
 ]);
 /*
@@ -112,23 +137,6 @@ angular.module('mean.rfi')
     }
 ]);*/
 
-angular.module('mean.rfi')
-.controller('rfiDateController',['$scope',
-  function($scope) {
-    $scope.rfi = {
-      date: new Date()
-    };
-  }
-]);
-
-angular.module('mean.rfi')
-.controller('dueDateController',['$scope',
-  function($scope) {
-    $scope.rfi = {
-      dueDate: new Date()
-    };
-  }
-]);
 
 /*
 angular.module('mean.rfi').controller('ItemsController', ['$scope','$rootScope', 

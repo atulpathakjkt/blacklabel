@@ -23,6 +23,11 @@
     .ui-datepicker-trigger{
     	display: none;
     }
+
+    .icon {
+    	padding-top: 8px;
+    }
+
 </style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js" ></script>
@@ -32,7 +37,7 @@
 		<div class="container">
             <div class="row">
                     <div class= "col-md-3">
-                    	<input  id="chooseBussiness" class="form-control" type="text" name="chooseBussiness" placeholder="Choose A Bussiness" ng-model="chooseBussiness" />
+                    	<input  id="chooseBussiness" class="form-control" type="text" name="chooseBussiness" placeholder="Choose A Bussiness" ng-model="chooseBussiness" required />
 	            	</div>
 	            	<div class="col-md-1"></div>
 	    			<div class="col-md-8" >
@@ -61,16 +66,16 @@
 					</div>
 	            </div>
 
-	            <div class="col-md-6" ng-controller="rfiDateController" >
+	            <div class="col-md-6" >
 		    		<div class="col-md-6" >
 		    			<span >RFI Date			    	
 					    </span>
-					    <input readonly="true" id="" type="text" class="form-control" ng-model="rfi.date" name="mDate" jqdatepicker/>
+					    <input readonly="true" id="" type="text" class="form-control" ng-model="rfiDate.date" name="mDate" jqdatepicker/>
 					</div>
 
-					<div class="col-md-6" ng-controller="dueDateController">
+					<div class="col-md-6">
 						<span class="">RFI Due Date
-					    	<input id="" readonly="true" type="text" class="form-control" ng-model="rfi.dueDate" name="mDate" jqdatepicker/>
+					    	<input id="" readonly="true" type="text" class="form-control" ng-model="rfiDate.dueDate" name="mDate" jqdatepicker/>
 					    </span>    
 					</div>
 					
@@ -88,7 +93,7 @@
     		<div class="row">
     			<div class="container-fluid">
 			        <div class="row">  
-				    	<label >{{count}}</label>
+				    	<label >{{totalItemsCount}}</label>
 
 				    	<!-- Added to pluralize item -->
 				    	<ng-pluralize count="count"
@@ -99,7 +104,7 @@
 			        <div class="row error_message" ng-show="{{contactError}}">{{contactErrorMsg}}</div>
 			        
 			    	<div class="row">
-			          <div class="container">
+			          <div class="container" id="item1">
 				          <input type="text" ng-model="item1.number"  class="col-md-2"
 				             placeholder="Item Number"/> 
 				          <input type="text" ng-model="item1.detail" class="col-md-6"
@@ -107,7 +112,8 @@
 			              <input type="text" ng-model="item1.quantity"
 			               placeholder="Quantity" class="col-md-3" />
 						  <additem></additem>
-						  <button type="button"  class="btnAdd" value="Add" ng-click= "addItem(); addRow()"/>
+						  <span removeitem class="col-md-1 pull-right icon glyphicon glyphicon-plus" ng-click= "addItem(); addRow()" style="cursor: pointer;" aria-hidden="true"></span>
+						  <!-- <removeitem></removeitem> -->
 			          </div>
 			    	</div>
 			    </div>
@@ -126,13 +132,13 @@
 					<span>Memo &nbsp</span><input class="form-control" id="approvedBy" placeholder="Memo" ng-model="memo"/>
 				</div>
 				<div class="col-md-6"> </div>
-				<div class="col-md-4">
+				<div class="col-md-4 ">
 					<div class="form-inline pull-right">
 						<span>Approved By &nbsp</span><input class="form-control" id="approvedBy" placeholder="Approved" ng-model="approvedBy"/>
 					</div>
 					
 					<div class="form-inline pull-right" style="padding-top: 2%;">
-						<span>Date &nbsp</span><input class="form-control" id="todayDate" placeholder="Date" ng-model="todayDate"/>
+						<span>Sign Date &nbsp:</span><span id="todayDate"><b>{{rfiDate.signDate | date:'EEEE, MMM dd yyyy'}}</b></span>
 					</div>
 				</div>
 			</div>		
