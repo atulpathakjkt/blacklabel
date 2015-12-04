@@ -19,5 +19,11 @@ angular.module('mean.rfi').config(['$stateProvider',
           templateUrl: 'rfi/views/createrfi.html',        
         });
 
+    $stateProvider
+      .state('listrfi', {
+          url: '/rfi/receivedrfi',
+          templateUrl: 'rfi/views/listrfi.html',        
+        });
+
   }
 ]);																																																																																																																																																																																																																																																																																																																																																																																																																																																														

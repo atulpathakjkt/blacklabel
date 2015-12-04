@@ -29,16 +29,105 @@
     }
 
 </style>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js" ></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js" ></script>
+<script src="bower_components/bootstrap/dist/css/bootstrap.css" ></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" ></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js"></script>
+
 
 <div ng-controller="createrfiController">
 	<form id="register_form" >
 		<div class="container">
             <div class="row">
                     <div class= "col-md-3">
-                    	<input  id="chooseBussiness" class="form-control" type="text" name="chooseBussiness" placeholder="Choose A Bussiness" ng-model="chooseBussiness" required />
-	            	</div>
+					    <input type="text" ng-model="asyncSelected" placeholder="Enter Bussiness"  typeahead="name for name in getBusinessName($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+					    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+					    <div ng-show="noResults">
+					     	<a data-toggle="modal" data-target=".bs-example-modal-lg">
+					      		<i class="glyphicon glyphicon-plus"></i> Add {{asyncSelected}}
+					      	</a>
+					      	<!-- Modal -->
+							<!-- <div class="modal fade .bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h4 class="modal-title" id="myModalLabel">Customer Information</h4>
+							      </div>
+							      <div class="modal-body">
+							        	
+							        		<div class="col-md-6">
+								        		<div class="row">
+								        			<span>First Name</span>
+									        		<span>Middle Name</span>
+									        		<span>Title</span>
+									        		<span>Last Name</span>
+									        		<span>Suffix</span>
+								        		</div>
+								        		<div class="row">
+								        			<span>First Name</span>
+									        		<span>Middle Name</span>
+									        		<span>Title</span>
+									        		<span>Last Name</span>
+									        		<span>Suffix</span>
+								        		</div>
+							        		</div>
+							        		<div class="col-md-6">
+							        			...
+							        		</div>
+
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							        <button type="button" class="btn btn-primary">Save changes</button>
+							      </div>
+							    </div>
+							  </div>
+							</div> -->
+							<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+							  <div class="modal-dialog modal-lg">
+							    <div class="modal-content">
+							      	<div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">Customer Information</h4>
+								      </div>
+								      <div class="modal-body">
+								        	<div class="container-fluid">
+									        	<div class="col-md-7">
+									        		<div class="row">
+									        			<span class="col-md-4"><b>First Name</b></span>
+										        		<span class="col-md-4"><b>Middle Name</b></span>
+										        		
+										        		<span class="col-md-4"><b>Last Name</b></span>
+									        		</div>
+									        		<div class="row">
+									        			<input class="col-md-3" type="text" />
+									        			<input class="col-md-3 col-md-offset-1" type="text" />
+									        			<input class="col-md-3 col-md-offset-1" type="text" />
+									        		</div>
+								        		</div>
+								        		<div class="col-md-4">
+								        			<div class="row">
+								        				<div><b>Email</b></div>
+									        			<div>
+									        				<input class="col-md-12" type="text" />
+									        			</div>
+									        		</div>
+								        		</div>
+								        	</div>
+								      </div>
+								      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							        <button type="button" class="btn btn-primary">Save changes</button>
+							      </div>
+							    	</div>
+							 	</div>
+							  </div>
+					    	</div>
+
+					</div>
 	            	<div class="col-md-1"></div>
 	    			<div class="col-md-8" >
 				    	<input type="email" class="form-control" id="emailAddresses" placeholder="Enter Email Addresses"  ng-model="emailAddresses" />

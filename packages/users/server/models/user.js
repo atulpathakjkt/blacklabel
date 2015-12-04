@@ -86,6 +86,9 @@ var UserSchema = new Schema({
     required : true,
     default : false
   },
+  rfis: {
+    type: Array,
+  },
   salt: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,

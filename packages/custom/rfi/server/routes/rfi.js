@@ -14,6 +14,11 @@ module.exports = function(Articles, app, auth) {
 
   app.route('/rfi').post(rfi.create);
 
+  /*app.get('/getbusinessname', function (req, res) {
+    res.send('Get request');
+  });*/
+  
+  app.route('/getbusinessname').get(rfi.getbusinessname);
 
   /*app.route('/articles/:articleId')
     .get(articles.show)

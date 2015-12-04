@@ -30,6 +30,21 @@ angular.module('mean.rfi')
 angular.module('mean.rfi')
 .controller('createrfiController',['$scope', 'countFactory', 'Global', 'Rfi', '$http',
     function($scope, countFactory, Global, Rfi, $http) {
+
+      $scope.selected = undefined;
+      // Any function returning a promise object can be used to load values asynchronously
+      //get business names from db using promise and deferred
+      $scope.getBusinessName = function(val) {
+        return $http.get('/getbusinessname', {
+          params: {
+            value: val
+          }
+        }).then(function(response){
+          console.log(response);
+          return response.data.name;
+        });
+      };
+
       $scope.count = countFactory.getCount();
       $scope.totalItemsCount = countFactory.getTotalItemsCount();
       $scope.global = Global;
@@ -40,7 +55,6 @@ angular.module('mean.rfi')
 
         for(var i =1; i <= $scope.count; i++){
           if(!angular.isUndefined($scope["item"+i]) || ! $scope["item"+i] === null ) {
-            console.log($scope["item"+i]);
             if($scope["item"+i].number === undefined && $scope["item"+i].detail === undefined && $scope["item"+i].quantity === undefined ){
               //add logic if value is undefined........to be done
             }
@@ -53,7 +67,7 @@ angular.module('mean.rfi')
             }
           }
         }
-        console.log($scope.items);
+        
         var rfi = new Rfi({
           chooseBussiness: this.chooseBussiness,
           to: this.emailAddresses,
@@ -254,4 +268,3 @@ rfi.$save(function(response) {
 }
 ]);
 */
-

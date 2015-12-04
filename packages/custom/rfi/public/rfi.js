@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('mean.rfi', []);
+angular.module('mean.rfi', ['ui.bootstrap']);
